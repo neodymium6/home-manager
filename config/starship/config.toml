@@ -1,0 +1,61 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+command_timeout = 10000
+format = """$os$python$rust$directory$git_branch$git_status"""
+
+[character]
+success_symbol = ''
+error_symbol = ''
+
+[os]
+format = '[$symbol](bold white) '
+disabled = false
+
+[os.symbols]
+Windows = ' '
+Arch = '󰣇'
+Ubuntu = ''
+Macos = '󰀵'
+
+# Shows current directory
+[directory]
+truncation_length = 3
+truncation_symbol = '…/'
+home_symbol = '~'
+read_only_style = '197'
+read_only = '  '
+style = 'bold #6495ed'
+format = '[$path]($style)[$read_only]($read_only_style) '
+
+# Shows current git branch
+[git_branch]
+symbol = ' '
+format = '[$symbol$branch]($style) '
+truncation_symbol = '…/'
+style = 'bold #82ae46'
+
+# Shows current git status
+[git_status]
+format = '([\($all_status$ahead_behind\)]($style)) '
+style = 'bold #82ae46' 
+conflicted = '[ confliced=${count}](#b55233)'
+up_to_date = '[󰘽 up-to-date](#82ae46)'
+untracked = '[󰋗 u=${count}](#b55233) '
+ahead = ' ahead=${count}'
+diverged = ' ahead=${ahead_count}  behind=${behind_count}'
+behind = ' behind=${count}'
+stashed = '[ stashed=${count}](#82ae46) '
+modified = '[󰛿 m=${count}](#fff352) '
+staged = '[󰐗 s=${count}](#82ae46) '
+renamed = '[󱍸 r=${count}](#fff362) '
+deleted = '[󰍶 d=${count}](#b55233) '
+
+[python]
+style = 'bold #fff352'
+format = '[(\($virtualenv\) )${version}]($style) '
+
+[rust]
+style = 'bold #b55233'
+format = '[$version]($style)'
+
