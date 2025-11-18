@@ -39,7 +39,7 @@ style = 'bold #82ae46'
 [git_status]
 format = '([\($all_status$ahead_behind\)]($style)) '
 style = 'bold #82ae46' 
-conflicted = '[ confliced=${count}](#b55233)'
+conflicted = '[ conflicted=${count}](#b55233)'
 up_to_date = '[󰘽 up-to-date](#82ae46)'
 untracked = '[󰋗 u=${count}](#b55233) '
 ahead = ' ahead=${count}'
