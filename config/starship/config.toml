@@ -2,7 +2,7 @@
 
 add_newline = false
 command_timeout = 10000
-format = """$os$python$rust$directory$git_branch$git_status"""
+format = """$os$hostname$python$rust$directory$git_branch$git_status"""
 
 [character]
 success_symbol = ''
@@ -17,6 +17,11 @@ Windows = ' '
 Arch = '󰣇'
 Ubuntu = ''
 Macos = '󰀵'
+Debian = ''
+
+[hostname]
+ssh_only = true
+format = '[$hostname]($style) '
 
 # Shows current directory
 [directory]
