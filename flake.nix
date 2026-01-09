@@ -26,6 +26,8 @@
   outputs = inputs@{ nixpkgs, home-manager, nix-darwin, nix4nvchad, nix-homebrew, ... }:
     let
       username = "neodymium6";
+      gitName = "neodymium6";
+      gitEmail = "104201402+neodymium6@users.noreply.github.com";
 
       # Linux-specific unfree packages
       linuxNixpkgsConfig = {
@@ -62,6 +64,7 @@
             system = linuxSystem;
             config = linuxNixpkgsConfig;
           };
+          extraSpecialArgs = { inherit username gitName gitEmail; };
           modules = [
             ./home.nix
             nix4nvchad.homeManagerModule
@@ -74,7 +77,7 @@
       darwinConfigurations.${darwinHost} = nix-darwin.lib.darwinSystem {
         system = darwinSystem;
 
-        specialArgs = { inherit username; };
+        specialArgs = { inherit username gitName gitEmail; };
 
         modules = [
           ./darwin/configuration.nix
@@ -93,6 +96,7 @@
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit username gitName gitEmail; };
 
             home-manager.users.${username} = {
               imports = [

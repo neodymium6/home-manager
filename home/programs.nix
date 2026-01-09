@@ -1,4 +1,4 @@
-{ pkgs, lib, isLinux, ... }:
+{ pkgs, lib, isLinux, gitName, gitEmail, ... }:
 
 {
   programs = {
@@ -30,8 +30,8 @@
       enable = true;
       settings = {
         user = {
-          name = "neodymium6";
-          email = "104201402+neodymium6@users.noreply.github.com";
+          name = gitName;
+          email = gitEmail;
         };
         push = { autoSetupRemote = true; };
         init = { defaultBranch = "main"; };

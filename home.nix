@@ -1,7 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, username, gitName, gitEmail, ... }:
 
 let
-  username = "neodymium6";
   isLinux = pkgs.stdenv.isLinux;
   isDarwin = pkgs.stdenv.isDarwin;
 in
@@ -21,5 +20,5 @@ in
 
   home.sessionVariables = { EDITOR = "nvim"; };
 
-  _module.args = { inherit isDarwin isLinux; };
+  _module.args = { inherit isDarwin isLinux gitName gitEmail; };
 }
