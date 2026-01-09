@@ -51,6 +51,9 @@
     "com.apple.finder" = {
       "FXPreferredViewStyle" = "clmv";
     };
+    "com.apple.screencapture" = {
+      name = "SS";
+    };
   };
 
   system.defaults.WindowManager.EnableStandardClickToShowDesktop = false;
