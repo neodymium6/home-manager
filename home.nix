@@ -20,39 +20,46 @@ in
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
-    # Common packages (Linux & macOS)
-    neofetch
-    less
-    bat
-    eza
+    # Shell & Prompt
     blesh
-    ripgrep
-    lazygit
-    unzip
-    python314
-    cargo
-    tree
-    claude-code
-    btop
-    yazi
-    dust
-    fd
-    delta
-    zellij
-    zoxide
     direnv
-    tmux
     starship
+    zoxide
+
+    # Terminal Multiplexer
+    tmux
+    zellij
+
+    # File Management
+    bat
+    dust
+    eza
+    fd
+    tree
+    yazi
+
+    # Search Tools
     fzf
+    ripgrep
+
+    # Development
+    cargo
+    delta
+    lazygit
+    python314
+
+    # System & Utilities
+    btop
+    claude-code
+    less
+    neofetch
+    unzip
   ] ++ lib.optionals isDarwin [
-    # macOS-specific packages
-    wezterm
     firefox
     google-chrome
     slack
+    wezterm
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
