@@ -44,6 +44,9 @@ in
     zellij
     zoxide
     direnv
+    tmux
+    starship
+    fzf
   ] ++ lib.optionals isDarwin [
     # macOS-specific packages
     wezterm
@@ -56,9 +59,15 @@ in
   # plain files is through 'home.file'.
   home.file = {
     # Common dotfiles (Linux & macOS)
+    ".config/tmux/tmux.conf" = {
+      source = ./config/tmux/tmux.conf;
+    };
     ".config/tmux/scripts/shorten_path.sh" = {
       source = ./config/tmux/scripts/shorten_path.sh;
       executable = true;
+    };
+    ".config/starship.toml" = {
+      source = ./config/starship/config.toml;
     };
   } // lib.optionalAttrs isDarwin {
     # macOS-specific dotfiles
@@ -158,21 +167,6 @@ in
         push = { autoSetupRemote = true; };
         init = { defaultBranch = "main"; };
       };
-    };
-    tmux = {
-      enable = true;
-      extraConfig = builtins.readFile ./config/tmux/tmux.conf;
-    };
-    fzf = { enable = true; };
-    starship = {
-      enable = true;
-      enableBashIntegration = false;  # We'll manually integrate it with proper timing
-      settings =
-        builtins.fromTOML (builtins.readFile ./config/starship/config.toml);
-    };
-    zoxide = {
-      enable = true;
-      enableBashIntegration = false;  # We'll manually integrate it with proper timing
     };
 
     nvchad = {
