@@ -12,7 +12,11 @@
         la = "eza -lha --icons";
         ll = "eza -lh --icons";
         grep = "grep --color=auto";
+        fzf = "fzf --preview='bat --color=always {}'";
       };
+      historySize = 5000;
+      historyFileSize = 5000;
+      historyControl = [ "ignorespace" "ignoredups" ];
       bashrcExtra =
         (lib.optionalString isLinux ''
           eval "$(${pkgs.coreutils}/bin/dircolors -b)"
