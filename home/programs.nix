@@ -12,6 +12,7 @@
         la = "eza -lha --icons";
         ll = "eza -lh --icons";
         grep = "grep --color=auto";
+        fzf = "fzf --preview='bat --color=always {}'";
       };
       bashrcExtra =
         (lib.optionalString isLinux ''
