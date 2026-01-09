@@ -31,6 +31,14 @@
   system.defaults.NSGlobalDomain = {
     AppleShowAllExtensions = true;
     AppleShowAllFiles = true;
+    KeyRepeat = 2;
+    InitialKeyRepeat = 15;
+    ApplePressAndHoldEnabled = false;
+  };
+
+  system.defaults.screencapture = {
+    location = "~/Pictures/Screenshots";
+    type = "png";
   };
 
   system.defaults.CustomUserPreferences = {
