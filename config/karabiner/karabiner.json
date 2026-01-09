@@ -1,0 +1,149 @@
+{
+  "global": {
+    "check_for_updates_on_startup": false,
+    "show_in_menu_bar": false,
+    "show_profile_name_in_menu_bar": false
+  },
+  "profiles": [
+    {
+      "name": "Default profile",
+      "selected": true,
+      "simple_modifications": [],
+      "fn_function_keys": [],
+      "devices": [],
+      "virtual_hid_keyboard": {
+        "country_code": 0,
+        "indicate_sticky_modifier_keys_state": true,
+        "mouse_key_xy_scale": 100
+      },
+      "parameters": {
+        "delay_milliseconds_before_open_device": 1000
+      },
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Built-in only: Caps Lock -> Left Control",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_control" }],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      { "is_built_in_keyboard": true, "is_keyboard": true }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Built-in only: Left Control -> Left Option (physical key only; ignore generated events)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "left_control",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_option" }],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      { "is_built_in_keyboard": true, "is_keyboard": true }
+                    ]
+                  },
+                  {
+                    "type": "event_changed_if",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Built-in only: Right Shift + Right Command -> japanese_eisuu (Eisu)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_command",
+                  "modifiers": { "mandatory": ["right_shift"] }
+                },
+                "to": [{ "key_code": "japanese_eisuu" }],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      { "is_built_in_keyboard": true, "is_keyboard": true }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_shift",
+                  "modifiers": { "mandatory": ["right_command"] }
+                },
+                "to": [{ "key_code": "japanese_eisuu" }],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      { "is_built_in_keyboard": true, "is_keyboard": true }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Built-in only: Right Shift + Right Option -> japanese_kana (Kana)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_option",
+                  "modifiers": { "mandatory": ["right_shift"] }
+                },
+                "to": [{ "key_code": "japanese_kana" }],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      { "is_built_in_keyboard": true, "is_keyboard": true }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_shift",
+                  "modifiers": { "mandatory": ["right_option"] }
+                },
+                "to": [{ "key_code": "japanese_kana" }],
+                "conditions": [
+                  {
+                    "type": "device_if",
+                    "identifiers": [
+                      { "is_built_in_keyboard": true, "is_keyboard": true }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+

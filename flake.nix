@@ -2,10 +2,13 @@
   description = "Home Manager configuration of neodymium6";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nvchad-starter = {
@@ -17,29 +20,88 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nvchad-starter.follows = "nvchad-starter";
     };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
-  outputs = { nixpkgs, home-manager, nix4nvchad, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nix-darwin, nix4nvchad, nix-homebrew, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfreePredicate = pkg:
-            builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
-        };
+      username = "neodymium6";
+
+      # Linux-specific unfree packages
+      linuxNixpkgsConfig = {
+        allowUnfreePredicate = pkg:
+          builtins.elem (nixpkgs.lib.getName pkg) [
+            "claude-code"
+          ];
       };
-    in {
-      homeConfigurations."neodymium6" =
+
+      # macOS-specific unfree packages
+      darwinNixpkgsConfig = {
+        allowUnfreePredicate = pkg:
+          builtins.elem (nixpkgs.lib.getName pkg) [
+            "claude-code"
+            "google-chrome"
+            "slack"
+          ];
+      };
+
+      # Debian
+      linuxSystem = "x86_64-linux";
+
+      # macOS (M5/arm)
+      darwinSystem = "aarch64-darwin";
+      darwinHost = "mpb-2025-m5";
+    in
+    {
+      # -----------------------
+      # Linux: home-manager standalone
+      # -----------------------
+      homeConfigurations."${username}" =
         home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          # Specify your home configuration modules here, for example,
-          # the path to your home.nix.
-          modules = [ ./home.nix nix4nvchad.homeManagerModule ];
-
-          # Optionally use extraSpecialArgs
-          # to pass through arguments to home.nix
+          pkgs = import nixpkgs {
+            system = linuxSystem;
+            config = linuxNixpkgsConfig;
+          };
+          modules = [
+            ./home.nix
+            nix4nvchad.homeManagerModule
+          ];
         };
+
+      # -----------------------
+      # macOS: nix-darwin + home-manager
+      # -----------------------
+      darwinConfigurations.${darwinHost} = nix-darwin.lib.darwinSystem {
+        system = darwinSystem;
+
+        specialArgs = { inherit username; };
+
+        modules = [
+          ./darwin/configuration.nix
+
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              user = username;
+            };
+          }
+
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs.config = darwinNixpkgsConfig;
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.${username} = {
+              imports = [
+                ./home.nix
+                nix4nvchad.homeManagerModule
+              ];
+            };
+          }
+        ];
+      };
     };
 }
