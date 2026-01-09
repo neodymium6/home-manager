@@ -1,11 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  username = "neodymium6";
+  isLinux = pkgs.stdenv.isLinux;
+  isDarwin = pkgs.stdenv.isDarwin;
+in
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "neodymium6";
+  home.username = username;
 
-  home.homeDirectory = "/home/neodymium6";
+  home.homeDirectory =
+    if isDarwin then "/Users/${username}" else "/home/${username}";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -19,9 +23,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    # Common packages (Linux & macOS)
     neofetch
     less
     bat
@@ -39,36 +41,59 @@
     dust
     fd
     delta
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    zellij
+    zoxide
+    direnv
+  ] ++ lib.optionals isDarwin [
+    # macOS-specific packages
+    wezterm
+    firefox
+    google-chrome
+    slack
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+    # Common dotfiles (Linux & macOS)
     ".config/tmux/scripts/shorten_path.sh" = {
       source = ./config/tmux/scripts/shorten_path.sh;
+      executable = true;
+    };
+  } // lib.optionalAttrs isDarwin {
+    # macOS-specific dotfiles
+    ".hammerspoon/init.lua" = {
+      source = ./config/hammerspoon/init.lua;
+    };
+    ".config/wezterm/wezterm.lua" = {
+      source = ./config/wezterm/wezterm.lua;
+    };
+    ".config/karabiner/karabiner.json" = {
+      source = ./config/karabiner/karabiner.json;
+      force = true;
+    };
+    ".config/amethyst/amethyst.yml" = {
+      source = ./config/amethyst/amethyst.yml;
+    };
+    ".config/linearmouse/linearmouse.json" = {
+      source = ./config/linearmouse/linearmouse.json;
+      force = true;
+    };
+    ".local/bin/stty" = {
+      text = ''
+        #!/bin/bash
+        SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
+        REAL_STTY=$(PATH="''${PATH//''${SELF_DIR}:/}" which stty)
+        if [[ -n "$NVIM" || -n "$DIRENV_DIR" ]]; then
+          "$REAL_STTY" "$@" 2>/dev/null
+        else
+          exec "$REAL_STTY" "$@"
+        fi
+      '';
+      executable = true;
+    };
+    ".config/raycast/script-commands/open-chrome-new-window.sh" = {
+      source = ./config/raycast/script-commands/open-chrome-new-window.sh;
       executable = true;
     };
   };
@@ -110,11 +135,18 @@
         ll = "eza -lh --icons";
         grep = "grep --color=auto";
       };
-      bashrcExtra = ''
-        eval "$(dircolors -b)"
-        [[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
-        [[ ! ''${BLE_VERSION-} ]] || ble-attach
-      '';
+      bashrcExtra =
+        (lib.optionalString isLinux ''
+          # dircolors (Linux only)
+          eval "$(${pkgs.coreutils}/bin/dircolors -b)"
+        '') + ''
+          export PATH="$HOME/.local/bin:$PATH"
+          [[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
+          eval "$(${pkgs.starship}/bin/starship init bash --print-full-init)"
+          eval "$(${pkgs.zoxide}/bin/zoxide init bash --cmd cd)"
+          eval "$(${pkgs.direnv}/bin/direnv hook bash)"
+          [[ ! ''${BLE_VERSION-} ]] || ble-attach
+        '';
     };
     git = {
       enable = true;
@@ -134,10 +166,13 @@
     fzf = { enable = true; };
     starship = {
       enable = true;
-      enableBashIntegration = true;
-
+      enableBashIntegration = false;  # We'll manually integrate it with proper timing
       settings =
         builtins.fromTOML (builtins.readFile ./config/starship/config.toml);
+    };
+    zoxide = {
+      enable = true;
+      enableBashIntegration = false;  # We'll manually integrate it with proper timing
     };
 
     nvchad = {
