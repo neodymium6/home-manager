@@ -42,6 +42,8 @@
     type = "png";
   };
 
+  system.defaults.controlcenter.BatteryShowPercentage = true;
+
   system.defaults.CustomUserPreferences = {
     "com.apple.inputmethod.Kotoeri" = {
       "JIMPrefLiveConversionKey" = false;
