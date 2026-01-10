@@ -34,6 +34,7 @@
     KeyRepeat = 2;
     InitialKeyRepeat = 15;
     ApplePressAndHoldEnabled = false;
+    "com.apple.keyboard.fnState" = true;
   };
 
   system.defaults.screencapture = {
