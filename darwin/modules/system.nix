@@ -42,7 +42,15 @@
     type = "png";
   };
 
-  system.defaults.controlcenter.BatteryShowPercentage = true;
+  system.defaults.controlcenter = {
+    Bluetooth  = true;
+    Sound      = true;
+    Display    = false;
+    NowPlaying = true;
+    FocusModes = false;
+
+    BatteryShowPercentage = true;
+  };
 
   system.defaults.CustomUserPreferences = {
     "com.apple.inputmethod.Kotoeri" = {
@@ -56,6 +64,12 @@
     };
     "com.apple.screencapture" = {
       name = "SS";
+    };
+    "com.apple.TextInputMenuAgent" = {
+      "NSStatusItem Visible Item-0" = false;
+    };
+    "com.apple.TextInputMenu" = {
+      visible = false;
     };
   };
 
