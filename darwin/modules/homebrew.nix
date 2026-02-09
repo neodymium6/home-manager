@@ -11,6 +11,8 @@
       "logi-options+"
       "raycast"
       "zoom"
+      "easydict"
+      "codex"
     ];
     masApps = {
       "Yoink" = 457622435;
