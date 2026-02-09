@@ -47,6 +47,10 @@
       source = ../config/raycast/script-commands/open-chrome-new-window.sh;
       executable = true;
     };
+    ".config/raycast/script-commands/ask-chatgpt.sh" = {
+      source = ../config/raycast/script-commands/ask-chatgpt.sh;
+      executable = true;
+    };
   };
 
   home.activation.installTpm = config.lib.dag.entryAfter [ "writeBoundary" ] ''
