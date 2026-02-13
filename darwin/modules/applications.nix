@@ -35,4 +35,22 @@ in
       StandardErrorPath = "/tmp/hammerspoon.launchd.err";
     };
   };
+
+  launchd.user.agents.colima = {
+    serviceConfig = {
+      ProgramArguments = [
+        "${pkgs.bash}/bin/bash"
+        "-lc"
+        ''
+          ${pkgs.colima}/bin/colima start
+          ${pkgs.docker}/bin/docker context use colima >/dev/null 2>&1 || true
+        ''
+      ];
+
+      RunAtLoad = true;
+      KeepAlive = false;
+      StandardOutPath = "/tmp/colima.launchd.out";
+      StandardErrorPath = "/tmp/colima.launchd.err";
+    };
+  };
 }

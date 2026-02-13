@@ -42,5 +42,8 @@
     google-chrome
     slack
     wezterm
+    colima
+    docker
+    docker-compose
   ];
 }
