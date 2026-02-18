@@ -26,6 +26,7 @@
           eval "$(${pkgs.starship}/bin/starship init bash --print-full-init)"
           eval "$(${pkgs.zoxide}/bin/zoxide init bash --cmd cd)"
           eval "$(${pkgs.direnv}/bin/direnv hook bash)"
+          eval "$(${pkgs.fzf}/bin/fzf --bash)"
           [[ ! ''${BLE_VERSION-} ]] || ble-attach
         '';
     };
