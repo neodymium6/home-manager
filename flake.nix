@@ -47,7 +47,7 @@
           ];
       };
 
-      # Debian
+      # Linux (x86_64)
       linuxSystem = "x86_64-linux";
 
       # macOS (M5/arm)
@@ -62,6 +62,20 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = linuxSystem;
+            config = linuxNixpkgsConfig;
+          };
+          extraSpecialArgs = { inherit username gitName gitEmail; };
+          modules = [
+            ./home.nix
+            nix4nvchad.homeManagerModule
+          ];
+        };
+
+      # Linux (aarch64)
+      homeConfigurations."${username}-aarch64" =
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-linux";
             config = linuxNixpkgsConfig;
           };
           extraSpecialArgs = { inherit username gitName gitEmail; };
