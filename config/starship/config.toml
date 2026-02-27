@@ -18,6 +18,7 @@ Arch = '󰣇'
 Ubuntu = ''
 Macos = '󰀵'
 Debian = ''
+Raspbian = 'π'
 
 [hostname]
 ssh_only = true
