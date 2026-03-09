@@ -10,9 +10,11 @@
       "linearmouse"
       "logi-options+"
       "raycast"
+      "tailscale-app"
       "zoom"
       "easydict"
       "codex"
+      "zotero"
     ];
     masApps = {
       "Yoink" = 457622435;
