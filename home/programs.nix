@@ -1,5 +1,8 @@
 { pkgs, lib, isLinux, gitName, gitEmail, ... }:
 
+let
+  bashFunctions = import ./bash-functions { inherit pkgs; };
+in
 {
   programs = {
     home-manager.enable = true;
@@ -22,6 +25,7 @@
           eval "$(${pkgs.coreutils}/bin/dircolors -b)"
         '') + ''
           export PATH="$HOME/.local/bin:$PATH"
+          ${bashFunctions}
           [[ $- == *i* ]] && source -- "$(blesh-share)"/ble.sh --attach=none
           eval "$(${pkgs.starship}/bin/starship init bash --print-full-init)"
           eval "$(${pkgs.zoxide}/bin/zoxide init bash --cmd cd)"
