@@ -16,6 +16,7 @@
       "claude-code"
       "codex"
       "zotero"
+      "notion"
     ];
     masApps = {
       "Yoink" = 457622435;
