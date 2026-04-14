@@ -33,7 +33,6 @@
 
     # System & Utilities
     btop
-    claude-code
     less
     neofetch
     unzip
@@ -45,5 +44,7 @@
     colima
     docker
     docker-compose
+  ] ++ lib.optionals (!isDarwin) [
+    claude-code
   ];
 }

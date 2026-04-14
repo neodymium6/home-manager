@@ -13,6 +13,7 @@
       "tailscale-app"
       "zoom"
       "easydict"
+      "claude-code"
       "codex"
       "zotero"
     ];
