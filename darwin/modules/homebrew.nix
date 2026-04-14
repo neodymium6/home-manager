@@ -20,6 +20,7 @@
     ];
     masApps = {
       "Yoink" = 457622435;
+      "WireGuard" = 1451685025;
     };
     onActivation = {
       autoUpdate = false;
