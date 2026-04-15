@@ -39,6 +39,7 @@
   ] ++ lib.optionals isDarwin [
     firefox
     google-chrome
+    nodejs
     slack
     vscode
     wezterm
