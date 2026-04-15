@@ -43,6 +43,7 @@
           builtins.elem (nixpkgs.lib.getName pkg) [
             "google-chrome"
             "slack"
+            "vscode"
           ];
       };
 

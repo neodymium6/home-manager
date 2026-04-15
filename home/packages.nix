@@ -40,6 +40,7 @@
     firefox
     google-chrome
     slack
+    vscode
     wezterm
     colima
     docker
