@@ -19,6 +19,7 @@ Ubuntu = ''
 Macos = '󰀵'
 Debian = ''
 Raspbian = 'π'
+NixOS = ''
 
 [hostname]
 ssh_only = true
