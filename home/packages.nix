@@ -34,7 +34,7 @@
     # System & Utilities
     btop
     less
-    neofetch
+    fastfetch
     unzip
   ] ++ lib.optionals isDarwin [
     firefox
