@@ -35,6 +35,7 @@
           builtins.elem (nixpkgs.lib.getName pkg) [
             "claude-code"
             "codex"
+            "google-chrome"
           ];
       };
 
@@ -59,6 +60,7 @@
       # -----------------------
       # Linux: home-manager standalone
       # -----------------------
+      # x86_64 headless (default)
       homeConfigurations."${username}" =
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -72,7 +74,21 @@
           ];
         };
 
-      # Linux (aarch64)
+      # x86_64 GUI
+      homeConfigurations."${username}-gui" =
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = linuxSystem;
+            config = linuxNixpkgsConfig;
+          };
+          extraSpecialArgs = { inherit username gitName gitEmail; withGUI = true; };
+          modules = [
+            ./home.nix
+            nix4nvchad.homeManagerModule
+          ];
+        };
+
+      # aarch64 headless (default)
       homeConfigurations."${username}-aarch64" =
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -80,6 +96,20 @@
             config = linuxNixpkgsConfig;
           };
           extraSpecialArgs = { inherit username gitName gitEmail; };
+          modules = [
+            ./home.nix
+            nix4nvchad.homeManagerModule
+          ];
+        };
+
+      # aarch64 GUI
+      homeConfigurations."${username}-aarch64-gui" =
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-linux";
+            config = linuxNixpkgsConfig;
+          };
+          extraSpecialArgs = { inherit username gitName gitEmail; withGUI = true; };
           modules = [
             ./home.nix
             nix4nvchad.homeManagerModule

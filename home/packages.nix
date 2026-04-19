@@ -1,4 +1,4 @@
-{ pkgs, lib, isDarwin, ... }:
+{ pkgs, lib, isDarwin, withGUI, ... }:
 
 {
   home.packages = with pkgs; [
@@ -49,5 +49,8 @@
   ] ++ lib.optionals (!isDarwin) [
     claude-code
     codex
+  ] ++ lib.optionals (withGUI && !isDarwin) [
+    firefox
+    google-chrome
   ];
 }
