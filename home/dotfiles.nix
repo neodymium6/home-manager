@@ -1,4 +1,4 @@
-{ config, pkgs, lib, isDarwin, ... }:
+{ config, pkgs, lib, isDarwin, withGUI ? false, ... }:
 
 {
   home.file = {
@@ -12,12 +12,13 @@
     ".config/starship.toml" = {
       source = ../config/starship/config.toml;
     };
+  } // lib.optionalAttrs (isDarwin || withGUI) {
+    ".config/wezterm/wezterm.lua" = {
+      source = ../config/wezterm/wezterm.lua;
+    };
   } // lib.optionalAttrs isDarwin {
     ".hammerspoon/init.lua" = {
       source = ../config/hammerspoon/init.lua;
-    };
-    ".config/wezterm/wezterm.lua" = {
-      source = ../config/wezterm/wezterm.lua;
     };
     ".config/karabiner/karabiner.json" = {
       source = ../config/karabiner/karabiner.json;
