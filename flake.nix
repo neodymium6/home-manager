@@ -34,6 +34,7 @@
         allowUnfreePredicate = pkg:
           builtins.elem (nixpkgs.lib.getName pkg) [
             "claude-code"
+            "codex"
           ];
       };
 

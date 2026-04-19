@@ -48,5 +48,6 @@
     docker-compose
   ] ++ lib.optionals (!isDarwin) [
     claude-code
+    codex
   ];
 }
