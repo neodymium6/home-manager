@@ -3,8 +3,13 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 config.hide_tab_bar_if_only_one_tab = true
-config.window_decorations = "RESIZE"
 config.window_close_confirmation = "NeverPrompt"
+
+if wezterm.target_triple:find("apple%-darwin") then
+  config.window_decorations = "RESIZE"
+else
+  config.window_decorations = "TITLE|RESIZE"
+end
 
 config.font = wezterm.font_with_fallback({
 	"Hack Nerd Font Mono",
