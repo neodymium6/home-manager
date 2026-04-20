@@ -141,7 +141,7 @@
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit username gitName gitEmail; };
+            home-manager.extraSpecialArgs = { inherit username gitName gitEmail; withGUI = true; };
 
             home-manager.users.${username} = {
               imports = [
