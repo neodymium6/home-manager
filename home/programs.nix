@@ -39,6 +39,13 @@ in
             eval "$(${pkgs.fzf}/bin/fzf --bash)"
           fi
 
+          if [[ -d "$HOME/.bashrc.local.d" ]]; then
+            for bashrc_local in "$HOME"/.bashrc.local.d/*.bash; do
+              [[ -r "$bashrc_local" ]] && source "$bashrc_local"
+            done
+            unset bashrc_local
+          fi
+
           [[ ! ''${BLE_VERSION-} ]] || ble-attach
         '';
     };
