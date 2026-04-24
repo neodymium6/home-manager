@@ -67,7 +67,10 @@
             system = linuxSystem;
             config = linuxNixpkgsConfig;
           };
-          extraSpecialArgs = { inherit username gitName gitEmail; };
+          extraSpecialArgs = {
+            inherit username gitName gitEmail;
+            withGUI = false;
+          };
           modules = [
             ./home.nix
             nix4nvchad.homeManagerModule
@@ -95,7 +98,10 @@
             system = "aarch64-linux";
             config = linuxNixpkgsConfig;
           };
-          extraSpecialArgs = { inherit username gitName gitEmail; };
+          extraSpecialArgs = {
+            inherit username gitName gitEmail;
+            withGUI = false;
+          };
           modules = [
             ./home.nix
             nix4nvchad.homeManagerModule
