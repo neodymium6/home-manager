@@ -6,7 +6,10 @@
       source = ../config/tmux/tmux.conf;
     };
     ".config/tmux/scripts/shorten_path.sh" = {
-      source = ../config/tmux/scripts/shorten_path.sh;
+      text = builtins.replaceStrings
+        [ "#!/bin/bash" ]
+        [ "#!${pkgs.runtimeShell}" ]
+        (builtins.readFile ../config/tmux/scripts/shorten_path.sh);
       executable = true;
     };
     ".config/starship.toml" = {
