@@ -17,6 +17,7 @@
       "codex"
       "zotero"
       "notion"
+      "discord"
     ];
     masApps = {
       "Yoink" = 457622435;
