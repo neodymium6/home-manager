@@ -27,6 +27,7 @@
     # Development
     cargo
     delta
+    gh
     git-lfs
     lazygit
     python314
