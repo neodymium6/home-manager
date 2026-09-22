@@ -21,6 +21,7 @@
       inputs.nvchad-starter.follows = "nvchad-starter";
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    ratune.url = "github:neodymium6/ratune/617c2625a4d5cd50318668a03dab6d6ae3de526f";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, nix-darwin, nix4nvchad, nix-homebrew, ... }:
@@ -68,7 +69,7 @@
             config = linuxNixpkgsConfig;
           };
           extraSpecialArgs = {
-            inherit username gitName gitEmail;
+            inherit inputs username gitName gitEmail;
             withGUI = false;
           };
           modules = [
@@ -84,7 +85,7 @@
             system = linuxSystem;
             config = linuxNixpkgsConfig;
           };
-          extraSpecialArgs = { inherit username gitName gitEmail; withGUI = true; };
+          extraSpecialArgs = { inherit inputs username gitName gitEmail; withGUI = true; };
           modules = [
             ./home.nix
             nix4nvchad.homeManagerModule
@@ -99,7 +100,7 @@
             config = linuxNixpkgsConfig;
           };
           extraSpecialArgs = {
-            inherit username gitName gitEmail;
+            inherit inputs username gitName gitEmail;
             withGUI = false;
           };
           modules = [
@@ -115,7 +116,7 @@
             system = "aarch64-linux";
             config = linuxNixpkgsConfig;
           };
-          extraSpecialArgs = { inherit username gitName gitEmail; withGUI = true; };
+          extraSpecialArgs = { inherit inputs username gitName gitEmail; withGUI = true; };
           modules = [
             ./home.nix
             nix4nvchad.homeManagerModule
@@ -147,7 +148,7 @@
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit username gitName gitEmail; withGUI = true; };
+            home-manager.extraSpecialArgs = { inherit inputs username gitName gitEmail; withGUI = true; };
 
             home-manager.users.${username} = {
               imports = [

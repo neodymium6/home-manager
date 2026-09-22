@@ -1,4 +1,4 @@
-{ pkgs, lib, isDarwin, withGUI, ... }:
+{ pkgs, lib, isDarwin, withGUI, inputs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -11,6 +11,9 @@
     # Terminal Multiplexer
     tmux
     zellij
+
+    # Music
+    inputs.ratune.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # File Management
     bat
