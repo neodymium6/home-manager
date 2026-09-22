@@ -15,6 +15,7 @@
       "easydict"
       "claude-code"
       "codex"
+      "chatgpt"
       "zotero"
       "notion"
       "discord"
