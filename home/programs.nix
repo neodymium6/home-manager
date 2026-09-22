@@ -16,6 +16,7 @@ in
         ll = "eza -lh --icons";
         grep = "grep --color=auto";
         fzf = "fzf --preview='bat --color=always {}'";
+        glow = "PAGER='${pkgs.less}/bin/less -FRX' glow -p";
       };
       historySize = 5000;
       historyFileSize = 5000;

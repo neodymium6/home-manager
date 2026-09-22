@@ -20,6 +20,7 @@
     dust
     eza
     fd
+    glow
     tree
     yazi
 
